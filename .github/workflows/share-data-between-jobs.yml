@@ -12,8 +12,8 @@ jobs:
         with:
           name: output-log-file
           path: output.log
-jobs:
-  example-job:
+  example-job-2:
+    name: Get output
     steps:
       - name: Download a single artifact
         uses: actions/download-artifact@v3
