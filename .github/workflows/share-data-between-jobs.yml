@@ -3,6 +3,7 @@ on: [push]
 jobs:
   example-job:
     name: Save output
+    runs-on: ubuntu-lastest
     steps:
       - shell: bash
         run: |
@@ -14,6 +15,7 @@ jobs:
           path: output.log
   example-job-2:
     name: Get output
+    runs-on: ubuntu-lastest
     steps:
       - name: Download a single artifact
         uses: actions/download-artifact@v3
