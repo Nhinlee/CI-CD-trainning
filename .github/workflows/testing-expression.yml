@@ -9,4 +9,4 @@ jobs:
         if: contains('Hello world', 'world')
       - run: echo "step 2"
         if: contains(github.event.issue.labels.*.name, 'bug')
-      - run: echo ${{join(['le', 'chi', 'nhin'], ' ')}}
+      - run: echo "${{join(['le', 'chi', 'nhin'], ' ')}}"
