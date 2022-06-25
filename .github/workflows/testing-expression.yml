@@ -5,4 +5,3 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "start testing expressions"
-      - run: echo "${{join(['le', 'chi', 'nhin'], ' ')}}"
