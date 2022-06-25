@@ -4,4 +4,5 @@ jobs:
   Test-expressions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "start testing expressions"
+      - run: echo "${{join(['le', 'chi', 'nhin'], ' ')}}"
