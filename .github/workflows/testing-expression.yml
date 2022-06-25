@@ -1,12 +1,11 @@
 name: Testing expressions
 on: [push]
 jobs:
-  job-1:
+  Test-expression:
     runs-on: ubuntu-latest
     steps:
       - run: echo step 1
         if: contains('Hello world', 'world')
-      - run: echo ${{github.event.issue.labels.*.name}}
       - run: echo step 2
         if: contains(github.event.issue.labels.*.name, 'bug')
       - run: echo ${{join(['le', 'chi', 'nhin'], ' ')}}
