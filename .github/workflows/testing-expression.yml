@@ -5,3 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "start testing expressions"
+      - run: echo "step 1"
+        if: contains('Hello world', 'world')
+      - run: echo "step 2"
+        if: contains(github.event.issue.labels.*.name, 'bug')
