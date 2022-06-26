@@ -11,7 +11,8 @@ jobs:
     env:
       Greeting: Hello
     steps:
-      - name: "Say Hello Mona it's ${{$DAY_OF_WEEK}}"
+      - name: "Say Hello Mona it's Monday"
+        if: $DAY_OF_WEEK == 'Monday'
         run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
         env:
           First_Name: Mona
