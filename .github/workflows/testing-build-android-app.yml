@@ -1,8 +1,18 @@
 name: Testing Build Android Application
+env:
+  FLUTTER_VERSION: "2.8.1"
 on: [push]
 jobs:
   Testing-Build-Android-App:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Start build android application"
-      - run: flutter pub get
+      - uses: actions/checkout@v3
+      - name: Install Flutter
+        uses: britannio/action-install-flutter@v1
+        with:
+          version: $FLUTTER_VERSION
+      - name: Get Packages
+        run: flutter pub get
+      - name: Run Tests
+        run: flutter test
