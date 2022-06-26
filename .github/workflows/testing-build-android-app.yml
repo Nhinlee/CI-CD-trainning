@@ -19,9 +19,7 @@ jobs:
       - name: Run Tests With Makefile
         run: make run-test  
 
-      # start android emulator
-      - name: Run Android Emulator
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: flutter run
+      # build android application
+      - name: Build Android APK File
+        run: flutter build apk
+      
