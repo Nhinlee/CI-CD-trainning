@@ -1,0 +1,8 @@
+name: Testing Build Android Application
+on: [push]
+jobs:
+  Testing-Build-Android-App:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Start build android application"
+      - run: flutter pub get
