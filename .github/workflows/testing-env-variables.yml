@@ -1,10 +1,9 @@
 name: Greeting on variable day
 
-on:
-  workflow_dispatch
+on: [push]
 
 env:
-  DAY_OF_WEEK: Sunday
+  DAY_OF_WEEK: Monday
 
 jobs:
   greeting_job:
