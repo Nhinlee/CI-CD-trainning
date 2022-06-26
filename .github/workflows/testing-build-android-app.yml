@@ -20,7 +20,7 @@ jobs:
         run: make run-test  
 
       # start android emulator
-      - name: Start android emulator
+      # - name: Start android emulator
 
       # build android application
       - name: Run Application
