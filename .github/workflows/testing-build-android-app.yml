@@ -12,8 +12,8 @@ jobs:
         uses: britannio/action-install-flutter@v1
         with:
           version: $FLUTTER_VERSION
-      - name: Get Packages
-        run: flutter pub get
+      # - name: Get Packages
+      #   run: flutter pub get
       # - name: Run Tests
       #   run: flutter test
       - name: Run Tests With Makefile
