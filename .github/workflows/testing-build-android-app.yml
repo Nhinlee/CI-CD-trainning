@@ -6,15 +6,19 @@ jobs:
   Testing-Build-Android-App:
     runs-on: ubuntu-latest
     steps:
+      # install flutter
       - run: echo "Start build android application"
       - uses: actions/checkout@v3
       - name: Install Flutter
         uses: britannio/action-install-flutter@v1
         with:
           version: $FLUTTER_VERSION
-      # - name: Get Packages
-      #   run: flutter pub get
-      # - name: Run Tests
-      #   run: flutter test
+    
+      # get flutter packages & run unit test
       - name: Run Tests With Makefile
         run: make run-test
+
+      # start android simulator
+
+      
+      # build android application
