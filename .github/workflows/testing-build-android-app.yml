@@ -1,0 +1,25 @@
+name: Testing Build Android Application
+env:
+  FLUTTER_VERSION: "2.8.1"
+on: [push]
+jobs:
+  Testing-Build-Android-App:
+    runs-on: macos-latest
+    steps:
+      # install flutter
+      - run: echo "Start build android application"
+      - uses: actions/checkout@v3
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: $FLUTTER_VERSION
+          channel: 'stable'
+    
+      # get flutter packages & run unit test
+      - name: Run Tests With Makefile
+        run: make run-test  
+
+      # build android application
+      - name: Build Android APK File
+        run: flutter build apk
+      
