@@ -7,7 +7,6 @@ jobs:
       - run: echo "Start testing context"
 
   Draft-Check:
-    if: contains(github.ref, '')
     runs-on: ubuntu-latest
     steps:
       - run: echo "Start check branch"
