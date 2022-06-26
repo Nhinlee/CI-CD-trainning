@@ -4,7 +4,7 @@ env:
 on: [push]
 jobs:
   Testing-Build-Android-App:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       # install flutter
       - run: echo "Start build android application"
@@ -19,9 +19,9 @@ jobs:
       - name: Run Tests With Makefile
         run: make run-test  
 
-      # start android simulator
-    
+      # start android emulator
+      - name: Start android emulator
 
       # build android application
-      - name: Build & Run Application
+      - name: Run Application
         run: flutter run
