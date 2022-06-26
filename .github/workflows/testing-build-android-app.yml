@@ -20,6 +20,8 @@ jobs:
         run: make run-test  
 
       # start android simulator
-
+    
 
       # build android application
+      - name: Build & Run Application
+        run: flutter run
