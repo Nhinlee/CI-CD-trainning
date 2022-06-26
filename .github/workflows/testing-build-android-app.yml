@@ -10,15 +10,16 @@ jobs:
       - run: echo "Start build android application"
       - uses: actions/checkout@v3
       - name: Install Flutter
-        uses: britannio/action-install-flutter@v1
+        uses: subosito/flutter-action@v2
         with:
-          version: $FLUTTER_VERSION
+          flutter-version: $FLUTTER_VERSION
+          channel: 'stable'
     
       # get flutter packages & run unit test
       - name: Run Tests With Makefile
-        run: make run-test
+        run: make run-test  
 
       # start android simulator
 
-      
+
       # build android application
