@@ -15,6 +15,9 @@ jobs:
       - name: Dump GitHub context
         id: github_context_step
         run: echo '${{ toJSON(github) }}'
+      - name: Dump GitHub context
+        id: github_secrets_step
+        run: echo '${{ toJSON(secrets) }}'
       - name: Dump job context
         run: echo '${{ toJSON(job) }}'
       - name: Dump steps context
