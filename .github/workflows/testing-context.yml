@@ -12,9 +12,12 @@ jobs:
   dump_contexts_to_log:
     runs-on: ubuntu-latest
     steps:
-      # - name: Dump GitHub context
-      #   id: github_context_step
-      #   run: echo '${{ toJSON(github) }}'
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump GitHub context
+        id: github_secrets_step
+        run: echo '${{ toJSON(secrets) }}'
       - name: Dump job context
         run: echo '${{ toJSON(job) }}'
       - name: Dump steps context
@@ -25,3 +28,7 @@ jobs:
         run: echo '${{ toJSON(strategy) }}'
       - name: Dump matrix context
         run: echo '${{ toJSON(matrix) }}'
+      - run: echo '${{ secrets.GITHUB_TOKEN }}'
+      - run: echo '${{ github.token }}'
+      # - run:
+      #     if: ${{secrets.GITHUB_TOKEN == github.token}} echo "true"

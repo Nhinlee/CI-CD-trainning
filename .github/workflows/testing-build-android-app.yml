@@ -22,4 +22,25 @@ jobs:
       # build android application
       - name: Build Android APK File
         run: flutter build apk
+
+      # upload apk file to artifact
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-apk
+          path: build/app/outputs/apk/release/app-release.apk
+  
+  Testing-Release-Android-App:
+    needs: [Testing-Build-Android-App]
+    runs-on: macos-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: release-apk
+      - name: Release APK
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: release-apk
+          name: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
       
