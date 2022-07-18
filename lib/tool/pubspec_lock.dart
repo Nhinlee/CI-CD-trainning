@@ -69,15 +69,65 @@ class PubspecLock {
     String packageName,
     Map<String, String> packageProperties,
   ) {
-    final source = packageProperties['source'];
-    print(packageName);
-    print(source);
-    print('>>>>>>>>');
+    final source = packageProperties['source'] ?? '';
+    final version = packageProperties['version'] ?? '';
+    final url = packageProperties['url'] ?? '';
+    final path = packageProperties['path'] ?? '';
+    final ref = packageProperties['ref'] ?? '';
+    final sdk = packageProperties['sdk'] ?? '';
 
-    return PackageDependencySpec.hosted(
+    PackageDependencySpec packageDependencySpec = PackageDependencySpec.hosted(
       HostedPackageDependencySpec(
         package: packageName,
+        version: Optional(version),
       ),
     );
+
+    switch (source) {
+      case 'hosted':
+        {
+          packageDependencySpec = PackageDependencySpec.hosted(
+            HostedPackageDependencySpec(
+              package: packageName,
+              version: Optional(version),
+            ),
+          );
+        }
+        break;
+      case 'path':
+        {
+          packageDependencySpec = PackageDependencySpec.path(
+            PathPackageDependencySpec(
+              package: packageName,
+              path: path,
+            ),
+          );
+        }
+        break;
+      case 'git':
+        {
+          packageDependencySpec = PackageDependencySpec.git(
+            GitPackageDependencySpec(
+              package: packageName,
+              url: url,
+              path: Optional(path),
+              ref: Optional(ref),
+            ),
+          );
+        }
+        break;
+      case 'sdk':
+        {
+          packageDependencySpec = PackageDependencySpec.sdk(
+            SdkPackageDependencySpec(
+              package: packageName,
+              sdk: sdk,
+              version: Optional(version),
+            ),
+          );
+        }
+    }
+
+    return packageDependencySpec;
   }
 }

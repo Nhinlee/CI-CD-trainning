@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'package:ci_cd_trainning/tool/pubspec_lock.dart';
+import './pubspec_lock.dart';
 import 'package:pubspec_yaml/pubspec_yaml.dart';
-import 'package:functional_data/functional_data.dart';
-import 'package:plain_optional/plain_optional.dart';
 
 void main() {
   // Get input: Un-consistency package from <borg probe> command line
@@ -16,24 +14,7 @@ void main() {
   );
 
   // Loop over all the inconsistent dependency to update
-  // final file = File('./automation_testing/app1/pubspec.yaml');
-  // final pubspecYaml = file.readAsStringSync().toPubspecYaml();
-  //
-  // final dCpy = [...pubspecYaml.dependencyOverrides];
-  // int index = dCpy.indexWhere((d) => d.package() == "url_launcher");
-  // dCpy[index] = const PackageDependencySpec.hosted(
-  //   HostedPackageDependencySpec(
-  //     package: 'url_launcher',
-  //     version: Optional("^6.1.5"),
-  //   ),
-  // );
-  //
-  // final newPubspecYaml = pubspecYaml.copyWith(
-  //   dependencyOverrides: dCpy,
-  // );
-
-  //
-  // file.writeAsStringSync(newPubspecYaml.toYamlString());
+  _solveAllInconsistentDependency(appPubspecLock, inConsistentPackages);
 }
 
 Map<String, List<String>> getAllPackageWithDependencyInconsistent(File file) {
@@ -71,4 +52,70 @@ Map<String, List<String>> getAllPackageWithDependencyInconsistent(File file) {
   }
 
   return rs;
+}
+
+void _solveAllInconsistentDependency(
+  PubspecLock appPubspecLock,
+  Map<String, List<String>> inConsistentPackages,
+) {
+  final allAppPackages = appPubspecLock.packages;
+
+  for (final entry in inConsistentPackages.entries) {
+    final dependencyName = entry.key;
+    final packagePaths = entry.value;
+
+    if (allAppPackages.containsKey(dependencyName)) {
+      for (final packagePath in packagePaths) {
+        _rewriteDependencyForPackage(
+          packagePath,
+          allAppPackages[dependencyName]!,
+        );
+      }
+    }
+  }
+}
+
+void _rewriteDependencyForPackage(
+  String packagePath,
+  PackageDependencySpec dependencySpec,
+) {
+  final file = File('$packagePath/pubspec.yaml');
+  final pubspecYaml = file.readAsStringSync().toPubspecYaml();
+
+  // Copy all dependencies
+  final dependencies = [...pubspecYaml.dependencies];
+  final devDependencies = [...pubspecYaml.devDependencies];
+  final dependencyOverrides = [...pubspecYaml.dependencyOverrides];
+
+  // Get index of
+  int depsIndex = dependencies.indexWhere(
+    (d) => d.package() == dependencySpec.package(),
+  );
+  int devDepsIndex = devDependencies.indexWhere(
+    (d) => d.package() == dependencySpec.package(),
+  );
+  int depsOverrideIndex = dependencyOverrides.indexWhere(
+    (d) => d.package() == dependencySpec.package(),
+  );
+
+  // Re-write dependency
+  if (depsIndex >= 0) {
+    dependencies[depsIndex] = dependencySpec;
+  }
+
+  if (devDepsIndex >= 0) {
+    devDependencies[devDepsIndex] = dependencySpec;
+  }
+
+  if (depsOverrideIndex >= 0) {
+    dependencyOverrides[depsOverrideIndex] = dependencySpec;
+  }
+
+  final newPubspecYaml = pubspecYaml.copyWith(
+    dependencies: dependencies,
+    devDependencies: devDependencies,
+    dependencyOverrides: dependencyOverrides,
+  );
+
+  file.writeAsStringSync(newPubspecYaml.toYamlString());
 }
