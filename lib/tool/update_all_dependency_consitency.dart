@@ -2,6 +2,10 @@ import 'dart:io';
 import './pubspec_lock.dart';
 import 'package:pubspec_yaml/pubspec_yaml.dart';
 
+// TODO: Update this logic when move to student-app
+final ignoreList =
+    File('lib/tool/ignore_update_package_list').readAsStringSync();
+
 void main() {
   // Get input: Un-consistency package from <borg probe> command line
   final inconsistentInputFile = File('./dependency_inconsistency.txt');
@@ -9,6 +13,7 @@ void main() {
       getAllPackageWithDependencyInconsistent(inconsistentInputFile);
 
   // Read & parse all package version from student & teacher app
+  // TODO: Update this logic when move to student-app
   final appPubspecLock = PubspecLock.fromPubspecLockFile(
     File('./automation_testing/app1/pubspec.lock'),
   );
@@ -20,8 +25,9 @@ void main() {
 Map<String, List<String>> getAllPackageWithDependencyInconsistent(File file) {
   final Map<String, List<String>> rs = {};
   final inconsistentFileContent = file.readAsLinesSync();
-  final headerRegex =
-      RegExp(r'.*: inconsistent dependency specifications detected');
+  final headerRegex = RegExp(
+    r'.*: inconsistent dependency specifications detected',
+  );
   final packagePathRegex = RegExp(r'.*\/.*');
 
   int i = 0;
@@ -37,7 +43,10 @@ Map<String, List<String>> getAllPackageWithDependencyInconsistent(File file) {
         // Get all package paths have dependency inconsistent
         final nextLine = inconsistentFileContent[i + 1];
         if (packagePathRegex.hasMatch(nextLine)) {
-          packagePaths.add(nextLine.trim());
+          final packagePath = nextLine.trim();
+          if (!ignoreList.contains(packagePath)) {
+            packagePaths.add(packagePath);
+          }
         }
 
         i++;
