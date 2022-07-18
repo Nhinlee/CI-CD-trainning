@@ -16,13 +16,13 @@ void main() {
   // TODO: Update this logic when move to student-app (because we have multi app)
   final appPubspecLockFile = File('./automation_testing/app1/pubspec.lock');
   final appPubspecYamlFile = File('./automation_testing/app1/pubspec.yaml');
-  final allAppPackage = _getAllAppPackages(
+  final allAppPackages = _getAllAppPackages(
     appPubspecLockFile,
     appPubspecYamlFile,
   );
 
   // Loop over all the inconsistent dependency to update
-  _solveAllInconsistentDependency(allAppPackage, inConsistentPackages);
+  _solveAllInconsistentDependency(allAppPackages, inConsistentPackages);
 }
 
 Map<String, List<String>> getAllPackageWithDependencyInconsistent(File file) {
@@ -78,8 +78,8 @@ Map<String, PackageDependencySpec> _getAllAppPackages(
   final allPackages = appPubspecLock.packages;
   final allAppDependenciesInYaml = [
     ...appPubspecYaml.dependencies,
-    ...appPubspecYaml.dependencyOverrides,
     ...appPubspecYaml.devDependencies,
+    ...appPubspecYaml.dependencyOverrides,
   ];
 
   // If package already have in file yaml of teacher app / learner app
