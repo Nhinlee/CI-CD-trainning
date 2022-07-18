@@ -39,7 +39,7 @@ class PubspecLock {
             final prop = nextLine.trim().split(': ');
             if (prop.length >= 2) {
               packageProperties.addAll({
-                prop[0].trim(): prop[1].trim(),
+                prop[0].trim(): prop[1].replaceAll('"', '').trim(),
               });
             }
           }
