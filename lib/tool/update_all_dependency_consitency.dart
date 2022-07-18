@@ -13,13 +13,16 @@ void main() {
       getAllPackageWithDependencyInconsistent(inconsistentInputFile);
 
   // Read & parse all package version from student & teacher app
-  // TODO: Update this logic when move to student-app
-  final appPubspecLock = PubspecLock.fromPubspecLockFile(
-    File('./automation_testing/app1/pubspec.lock'),
+  // TODO: Update this logic when move to student-app (because we have multi app)
+  final appPubspecLockFile = File('./automation_testing/app1/pubspec.lock');
+  final appPubspecYamlFile = File('./automation_testing/app1/pubspec.yaml');
+  final allAppPackage = _getAllAppPackages(
+    appPubspecLockFile,
+    appPubspecYamlFile,
   );
 
   // Loop over all the inconsistent dependency to update
-  _solveAllInconsistentDependency(appPubspecLock, inConsistentPackages);
+  _solveAllInconsistentDependency(allAppPackage, inConsistentPackages);
 }
 
 Map<String, List<String>> getAllPackageWithDependencyInconsistent(File file) {
@@ -63,12 +66,37 @@ Map<String, List<String>> getAllPackageWithDependencyInconsistent(File file) {
   return rs;
 }
 
+Map<String, PackageDependencySpec> _getAllAppPackages(
+  File appPubspecLockFile,
+  File appPubspecYamlFile,
+) {
+  final appPubspecLock = PubspecLock.fromPubspecLockFile(
+    appPubspecLockFile,
+  );
+  final appPubspecYaml = appPubspecYamlFile.readAsStringSync().toPubspecYaml();
+
+  final allPackages = appPubspecLock.packages;
+  final allAppDependenciesInYaml = [
+    ...appPubspecYaml.dependencies,
+    ...appPubspecYaml.dependencyOverrides,
+    ...appPubspecYaml.devDependencies,
+  ];
+
+  // If package already have in file yaml of teacher app / learner app
+  // ->>> re-write that package for all packages from `pubspec.lock`
+  for (final dep in allAppDependenciesInYaml) {
+    if (allPackages.containsKey(dep.package())) {
+      allPackages[dep.package()] = dep;
+    }
+  }
+
+  return allPackages;
+}
+
 void _solveAllInconsistentDependency(
-  PubspecLock appPubspecLock,
+  Map<String, PackageDependencySpec> allAppPackages,
   Map<String, List<String>> inConsistentPackages,
 ) {
-  final allAppPackages = appPubspecLock.packages;
-
   for (final entry in inConsistentPackages.entries) {
     final dependencyName = entry.key;
     final packagePaths = entry.value;
