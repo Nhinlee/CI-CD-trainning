@@ -39,6 +39,13 @@
             </list>
           </value>
         </entry>
+        <entry key="borg">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../dart-borg/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="build">
           <value>
             <list>
@@ -225,7 +232,6 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2/lib" />
-              <option value="$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/lib" />
             </list>
           </value>
         </entry>
@@ -360,6 +366,13 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/pub_semver-2.1.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="pubspec_lock">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../pubspec_lock/lib" />
             </list>
           </value>
         </entry>
@@ -536,7 +549,6 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-2.0.3/lib" />
-              <option value="$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-3.0.1/lib" />
             </list>
           </value>
         </entry>
@@ -544,7 +556,6 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-2.0.3/lib" />
-              <option value="$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-3.0.1/lib" />
             </list>
           </value>
         </entry>
@@ -566,7 +577,6 @@
           <value>
             <list>
               <option value="$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-2.0.2/lib" />
-              <option value="$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-3.0.1/lib" />
             </list>
           </value>
         </entry>
@@ -615,6 +625,8 @@
       </option>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/../dart-borg/lib" />
+      <root url="file://$PROJECT_DIR$/../pubspec_lock/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-31.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-40.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/analyzer-2.8.0/lib" />
@@ -646,7 +658,6 @@
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/functional_data-1.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/glob-2.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.12.2/lib" />
-      <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.4/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/http_multi_server-3.2.1/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-3.1.4/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.1/lib" />
@@ -692,13 +703,10 @@
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.17/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_ios-6.0.17/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-2.0.3/lib" />
-      <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-3.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-2.0.3/lib" />
-      <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-3.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-2.1.0/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-2.0.6/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-2.0.2/lib" />
-      <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-3.0.1/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.1/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/vm_service-7.5.0/lib" />
       <root url="file://$PROJECT_DIR$/../../sdk/flutter/.pub-cache/hosted/pub.dartlang.org/watcher-1.0.1/lib" />
