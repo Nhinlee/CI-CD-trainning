@@ -85,6 +85,14 @@ Map<String, PackageDependencySpec> _getAllAppDependenciesYaml(
     }
   }
 
+  // Remove all path dependencies (don't need to override path dependency)
+  allPackages.removeWhere(
+    (key, value) => value.iswitcho(
+      path: (_) => true,
+      otherwise: () => false,
+    ),
+  );
+
   return allPackages;
 }
 
@@ -148,6 +156,14 @@ Map<String, PackageDependency> _getAllAppDependenciesLock(
   dependencies.addEntries(
     pubspecLock.packages.map(
       (e) => MapEntry(e.package(), e),
+    ),
+  );
+
+  // Remove all path dependencies (don't need to override path dependency)
+  dependencies.removeWhere(
+    (key, value) => value.iswitcho(
+      path: (_) => true,
+      otherwise: () => false,
     ),
   );
 
