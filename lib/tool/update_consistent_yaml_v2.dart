@@ -4,18 +4,10 @@ import 'package:pubspec_yaml/pubspec_yaml.dart';
 import 'package:borg/borg.dart';
 
 // TODO: Update this logic when move to student-app
-final ignoreList =
-    File('lib/tool/ignore_update_package_list').readAsStringSync();
 
 void main() {
-  // Scan all dart packages
-  final dartPackages = discoverDartPackages(
-    configuration: const BorgConfiguration(
-      pathsToScan: ['./'],
-      excludedPaths: [],
-    ),
-  );
-  final allPackagePaths = dartPackages.map((p) => p.path).toList();
+  // Scan all dart packages in mono repos
+  final allPackagePaths = _getAllPackagePaths();
 
   // Read & parse all package version from student & teacher app
   // TODO: Update this logic when move to student-app (because we have multi app)
@@ -28,6 +20,32 @@ void main() {
 
   // Loop over all the inconsistent dependency to update
   _solveAllInconsistentDependency(allAppDependencies, allPackagePaths);
+}
+
+List<String> _getAllPackagePaths() {
+  // TODO: update path relative
+  final ignorePackages =
+      File('lib/tool/ignore_update_package_list').readAsLinesSync();
+
+  final dartPackages = discoverDartPackages(
+    configuration: const BorgConfiguration(
+      pathsToScan: ['./'],
+      excludedPaths: [],
+    ),
+  );
+  final List<String> allPackagePaths = [];
+  for (final p in dartPackages) {
+    if (!_isInIgnoreList(ignorePackages, p.path)) allPackagePaths.add(p.path);
+  }
+
+  return allPackagePaths;
+}
+
+bool _isInIgnoreList(List<String> ignorePackages, String path) {
+  for (final package in ignorePackages) {
+    if (path.contains(package)) return true;
+  }
+  return false;
 }
 
 Map<String, PackageDependencySpec> _getAllAppDependencies(
