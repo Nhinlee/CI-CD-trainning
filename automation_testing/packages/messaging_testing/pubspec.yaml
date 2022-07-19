@@ -10,7 +10,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  http: ^0.12.0
   technical_1:
     path: ../technical_1
   technical_2:
@@ -24,6 +23,10 @@ dev_dependencies:
 
 dependency_overrides:
   url_launcher: 6.0.0
+  audioplayers:
+    git:
+      url: git@github.com:manabie-com/audioplayers.git
+      path: packages/audioplayers
 
 flutter:
   uses-material-design: true

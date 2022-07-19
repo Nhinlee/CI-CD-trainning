@@ -10,6 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   url_launcher: 6.0.0
+  audioplayers:
+    git:
+      url: git@github.com:manabie-com/audioplayers.git
+      path: packages/audioplayers
 
 dev_dependencies:
   flutter_lints: ^1.0.0

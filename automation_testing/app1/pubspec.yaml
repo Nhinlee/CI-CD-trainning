@@ -25,6 +25,10 @@ dev_dependencies:
 dependency_overrides:
   built_value_generator: ^8.4.0
   http: ^0.12.0
+  audioplayers:
+    git:
+      url: git@github.com:manabie-com/audioplayers.git
+      path: packages/audioplayers
 
 flutter:
   uses-material-design: true
