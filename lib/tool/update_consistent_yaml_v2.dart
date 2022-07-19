@@ -1,6 +1,7 @@
 import 'dart:io';
 import './custom_pubspec_lock.dart';
 import 'package:pubspec_yaml/pubspec_yaml.dart';
+import 'package:pubspec_lock/pubspec_lock.dart';
 import 'package:borg/borg.dart';
 
 // TODO: Update this logic when move to student-app
@@ -9,17 +10,27 @@ void main() {
   // Scan all dart packages in mono repos
   final allPackagePaths = _getAllPackagePaths();
 
-  // Read & parse all package version from student & teacher app
   // TODO: Update this logic when move to student-app (because we have multi app)
   final appPubspecLockFile = File('./automation_testing/app1/pubspec.lock');
   final appPubspecYamlFile = File('./automation_testing/app1/pubspec.yaml');
-  final allAppDependencies = _getAllAppDependencies(
+
+  /// --- Pubspec YAML -----
+  // Read & parse all dependencies version from student & teacher app yaml
+  final allAppDependenciesYaml = _getAllAppDependenciesYaml(
     appPubspecLockFile,
     appPubspecYamlFile,
   );
 
-  // Loop over all the inconsistent dependency to update
-  _solveAllInconsistentDependency(allAppDependencies, allPackagePaths);
+  // Loop over all packages to update pubspec yaml
+  _solveAllInconsistentDependencyYaml(allAppDependenciesYaml, allPackagePaths);
+
+  /// --- Pubspec LOCK -----
+
+  // Read & parse all dependencies version from student & teacher app lock file
+  final allAppDependenciesLock = _getAllAppDependenciesLock(appPubspecLockFile);
+
+  // Loop over all packages to update pubspec lock
+  _solveAllInconsistentDependencyLock(allAppDependenciesLock, allPackagePaths);
 }
 
 List<String> _getAllPackagePaths() {
@@ -48,7 +59,7 @@ bool _isInIgnoreList(List<String> ignorePackages, String path) {
   return false;
 }
 
-Map<String, PackageDependencySpec> _getAllAppDependencies(
+Map<String, PackageDependencySpec> _getAllAppDependenciesYaml(
   File appPubspecLockFile,
   File appPubspecYamlFile,
 ) {
@@ -75,17 +86,17 @@ Map<String, PackageDependencySpec> _getAllAppDependencies(
   return allPackages;
 }
 
-void _solveAllInconsistentDependency(
+void _solveAllInconsistentDependencyYaml(
   Map<String, PackageDependencySpec> allAppDependencies,
   List<String> packagePaths,
 ) {
   for (final packagePath in packagePaths) {
     final file = File('$packagePath/pubspec.yaml');
-    _rewriteYamlDependenciesForPackage(file, allAppDependencies);
+    _rewriteDependenciesForPackageYaml(file, allAppDependencies);
   }
 }
 
-void _rewriteYamlDependenciesForPackage(
+void _rewriteDependenciesForPackageYaml(
   File fileYaml,
   Map<String, PackageDependencySpec> allAppDependencies,
 ) {
@@ -123,4 +134,50 @@ void _rewriteYamlDependenciesForPackage(
   );
 
   fileYaml.writeAsStringSync(newPubspecYaml.toYamlString());
+}
+
+Map<String, PackageDependency> _getAllAppDependenciesLock(
+  File appPubspecLockFile,
+) {
+  final pubspecLock =
+      appPubspecLockFile.readAsStringSync().loadPubspecLockFromYaml();
+
+  final Map<String, PackageDependency> dependencies = {};
+  dependencies.addEntries(
+    pubspecLock.packages.map(
+      (e) => MapEntry(e.package(), e),
+    ),
+  );
+
+  return dependencies;
+}
+
+void _solveAllInconsistentDependencyLock(
+  Map<String, PackageDependency> allAppDependenciesLock,
+  List<String> packagePaths,
+) {
+  for (final packagePath in packagePaths) {
+    final file = File('$packagePath/pubspec.lock');
+    _rewriteDependenciesForPackageLock(file, allAppDependenciesLock);
+  }
+}
+
+void _rewriteDependenciesForPackageLock(
+  File fileLock,
+  Map<String, PackageDependency> allAppDependenciesLock,
+) {
+  final pubspecLock = fileLock.readAsStringSync().loadPubspecLockFromYaml();
+
+  final dependencies = [...pubspecLock.packages];
+
+  for (int i = 0; i < dependencies.length; i++) {
+    final d = dependencies[i];
+    if (allAppDependenciesLock.containsKey(d.package())) {
+      dependencies[i] = allAppDependenciesLock[d.package()]!;
+    }
+  }
+
+  final newPubspecLock = pubspecLock.copyWith(packages: dependencies);
+
+  fileLock.writeAsStringSync(newPubspecLock.toYamlString());
 }
