@@ -22,6 +22,12 @@ dev_dependencies:
   test: ^1.17.12
   flutter_lints: ^1.0.0
   pubspec_yaml: ^3.1.0
+  pubspec_lock:
+    path: ../pubspec_lock
+
+dependency_overrides:
+  borg:
+    path: ../dart-borg
 
 flutter:
   uses-material-design: true
