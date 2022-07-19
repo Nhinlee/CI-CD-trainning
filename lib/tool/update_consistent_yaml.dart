@@ -1,5 +1,5 @@
 import 'dart:io';
-import './pubspec_lock.dart';
+import './custom_pubspec_lock.dart';
 import 'package:pubspec_yaml/pubspec_yaml.dart';
 
 // TODO: Update this logic when move to student-app
