@@ -70,7 +70,7 @@ Map<String, PackageDependencySpec> _getAllAppPackages(
   File appPubspecLockFile,
   File appPubspecYamlFile,
 ) {
-  final appPubspecLock = PubspecLock.fromPubspecLockFile(
+  final appPubspecLock = CustomPubspecLock.fromPubspecLockFile(
     appPubspecLockFile,
   );
   final appPubspecYaml = appPubspecYamlFile.readAsStringSync().toPubspecYaml();

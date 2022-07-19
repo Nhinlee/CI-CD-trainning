@@ -2,14 +2,14 @@ import 'dart:io';
 import 'package:pubspec_yaml/pubspec_yaml.dart';
 import 'package:plain_optional/plain_optional.dart';
 
-class PubspecLock {
+class CustomPubspecLock {
   final Map<String, PackageDependencySpec> packages;
 
-  PubspecLock({required this.packages});
+  CustomPubspecLock({required this.packages});
 
-  factory PubspecLock.fromPubspecLockFile(File file) {
+  factory CustomPubspecLock.fromPubspecLockFile(File file) {
     final packages = _getAllPackagesFromPubspecLockFile(file);
-    return PubspecLock(
+    return CustomPubspecLock(
       packages: packages,
     );
   }
