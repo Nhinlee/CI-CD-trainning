@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:ci_cd_trainning/tool/pubspec_lock_extension.dart';
+
 import './custom_pubspec_lock.dart';
 import 'package:pubspec_yaml/pubspec_yaml.dart';
 import 'package:pubspec_lock/pubspec_lock.dart';
@@ -173,7 +175,14 @@ void _rewriteDependenciesForPackageLock(
   for (int i = 0; i < dependencies.length; i++) {
     final d = dependencies[i];
     if (allAppDependenciesLock.containsKey(d.package())) {
-      dependencies[i] = allAppDependenciesLock[d.package()]!;
+      // Copy dependency but still reserve the dependency type
+      final newDependency = PubspecLockUtils.copyDependencyWithType(
+        allAppDependenciesLock[d.package()]!,
+        d.type(),
+      );
+
+      // Override old dependency
+      dependencies[i] = newDependency;
     }
   }
 
