@@ -6,4 +6,4 @@ echo "Checking dependency inconsistency >>>"
 borg probe > dependency_inconsistency.txt
 
 echo "Updating all dependency to consistency >>>"
-dart run ./lib/tool/update_consistent_yaml.dart
+dart run ./lib/tool/update_consistent_yaml_v2.dart
